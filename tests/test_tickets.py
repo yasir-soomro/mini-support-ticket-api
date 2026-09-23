@@ -1,7 +1,7 @@
 import pytest
 from fastapi.testclient import TestClient
 from app.main import app
-from app import store
+from app.repositories.ticket_repository import get_ticket_repository
 
 client = TestClient(app)
 
@@ -9,9 +9,9 @@ client = TestClient(app)
 @pytest.fixture(autouse=True)
 def reset_store():
     """Reset store before every test for full isolation."""
-    store.clear()
+    get_ticket_repository().clear()
     yield
-    store.clear()
+    get_ticket_repository().clear()
 
 
 # ---------------------------------------------------------------------------
